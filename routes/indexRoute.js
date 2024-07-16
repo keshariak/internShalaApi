@@ -1,10 +1,14 @@
 const express = require("express");
-const { homepage, studentsignup,studentsignin,studentsignout } = require("../controller/indexController");
+const { homepage, studentsignup,studentsignin,studentsignout, currentUser } = require("../controller/indexController");
+const { isAuthenticated } = require("../middlewares/auth");
 const router =express.Router()
 
 // GET /
-
 router.get("/", homepage);
+
+
+// POST /
+router.post("/student",isAuthenticated, currentUser);
 
 // POST /student/signup
 router.post("/student/signup", studentsignup)
