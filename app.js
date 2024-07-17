@@ -24,6 +24,11 @@ const cookieparser= require("cookie-parser");
  );
  app.use(cookieparser())
 
+// file uploader
+//  const fileupload= require("")
+//  app.use(fileupload())
+
+
 //routes
 app.use("/", require("./routes/indexRoute"));
 

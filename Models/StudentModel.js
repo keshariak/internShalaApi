@@ -3,6 +3,31 @@ const mongoose = require("mongoose")
 const jwt= require("jsonwebtoken")
 var bcrypt = require('bcryptjs');
 const studentModel = new mongoose.Schema({
+    firstname:{
+        type: String,
+        required:[true, "Firstname is Required"],
+        
+    },
+    lastname:{
+        type: String,
+        required:[true, "Lastname is Required"],
+        
+    },
+    
+    contact:{
+        type: String,
+        required:[true, "Contact is Required"],
+        maxLength:[10, "Password Should not exceed more than 15 characters"],
+        minLength:[10, "Password should have atleast 5 characters"],
+        
+    },
+    city:{
+        type: String,
+        required:[true, "City is Required"],
+        minLength:[3, "City should have atleast 3 characters"],
+        
+    },
+    gender:{type:String, enum:["Male","Female", "Others"]},
     email:{
         type: String,
         required:[true, "Email is Required"],
@@ -18,12 +43,20 @@ const studentModel = new mongoose.Schema({
         maxLength:[15, "Password Should not exceed more than 15 characters"],
         minLength:[5, "Password should have atleast 5 characters"],
         // match:[]
-}},
+    },
+    resetPasswordToken:{
+    type:String,
+    default:"0"
+
+   },
+   avatar:String,
+},
+
 {timestamps:true}
 )
 
 studentModel.pre("save", function(){
-    if(!this.isModifed("password")){
+    if(!this.isModified("password")){
         return;
     }
     let salt=bcrypt.genSaltSync(10);
