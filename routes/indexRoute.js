@@ -1,4 +1,5 @@
 const express = require("express");
+// const uploadfile= require("../uploads")
 const { homepage,
      studentsignup,
      studentsignin,
@@ -11,8 +12,22 @@ const { homepage,
      studentavatar
      } = require("../controller/indexController");
 const { isAuthenticated } = require("../middlewares/auth");
-const router =express.Router()
 
+
+const multer = require("multer");
+const router = express.Router();
+
+// Configure storage options
+const storage = multer.diskStorage({
+     destination: function (req, file, cb) {
+         cb(null, '../uploads'); // Specify the directory to save the uploaded files
+     },
+     filename: function (req, file, cb) {
+         cb(null, Date.now() + '-' + file.originalname); // Specify the filename format
+     }
+ });
+ 
+ const upload = multer({ storage });
 // GET /
 router.get("/", homepage);
 
@@ -40,14 +55,12 @@ router.get("/student/forget-link/:id", studentforgetlink)
 // PoST /student/reset-password/:id
 router.post("/student/reset-password/:id",isAuthenticated, studentresetpassword)
 
-// PoST /student/upadte/:id
+// POST /student/upadte/:id
 router.post("/student/update/:id",isAuthenticated, studentupdate)
 
-// POST /student/upadte/:id
-router.post("/student/avatar/:id",isAuthenticated, studentavatar)
 
-
-
+// POST /student/avatar/:id
+// router.post("/student/avatar/:id", isAuthenticated, upload.single('avatar'), studentavatar);
 
 
 

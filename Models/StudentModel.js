@@ -49,7 +49,22 @@ const studentModel = new mongoose.Schema({
     default:"0"
 
    },
-   avatar:String,
+   avatar:{
+    type: Object,
+    default:{
+        fileId:'',
+        url:"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fdummy-avatar&psig=AOvVaw3BoFZVzSnCAVVHQhj39Qhs&ust=1721550253102000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJiymMqYtYcDFQAAAAAdAAAAABAE"
+    }
+   },
+   resume:{
+    education:[],
+    jobs:[],
+    internships:[],
+    responsibilities:[],
+    courses:[],
+    skills:[],
+    accomplishments:[],
+   },
 },
 
 {timestamps:true}
