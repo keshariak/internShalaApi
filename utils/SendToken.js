@@ -1,5 +1,5 @@
-exports.sendtoken= (student,statuscode, res)=>{
-    const token = student.getjwttoken();
+exports.sendtoken= (employee,statuscode, res)=>{
+    const token = employee.getjwttoken();
     const options={
         expires: new Date(
             Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -8,6 +8,6 @@ exports.sendtoken= (student,statuscode, res)=>{
         // secure:true,
 
     };
-    res.status(statuscode).cookie("token", token, options).json({success:true,id:student._id, token})
+    res.status(statuscode).cookie("token", token, options).json({success:true,id:employee._id, token})
     // res.json({token})
 }

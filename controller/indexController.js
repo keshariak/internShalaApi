@@ -142,3 +142,61 @@ exports.studentupdate=catchAsyncErrors(async (req, res,next)=>{
     
 // })
 
+
+const path = require('path'); // Ensure path module is imported
+
+exports.studentavatar = catchAsyncErrors(async (req, res, next) => {
+    try {
+        // Find the student by ID
+        const student = await Student.findById(req.params.id).exec();
+
+        if (!student) {
+            return res.status(404).json({ success: false, message: 'Student not found' });
+        }
+
+        // Access the file from the request
+        const file = req.files.avatar;
+
+        if (!file) {
+            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+
+        // Generate a modified file name
+        const modifiedFileName = `resumeBuilder-${Date.now()}${path.extname(file.name)}`;
+
+        // If there is an existing file, delete it from ImageKit
+        if (student.avatar && student.avatar.fileId) {
+            await imagekit.deleteFile(student.avatar.fileId);
+        }
+
+        // Upload the new file to ImageKit
+        const { fileId, url } = await imagekit.upload({
+            file: file.data,
+            fileName: modifiedFileName,
+        });
+
+        // Update the student's avatar information
+        student.avatar = { fileId, url };
+
+        // Save the updated student record
+        await student.save();
+
+        // Send a success response
+        res.status(200).json({
+            success: true,
+            message: "Student Profile Updated",
+            avatar: student.avatar, // Optionally include updated avatar info
+        });
+
+        // Optionally send a token if needed (move this above if response is not finalized)
+        // sendtoken(student, 201, res);
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+
+
+
+

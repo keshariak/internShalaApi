@@ -43,7 +43,7 @@ router.post("/student/signin", studentsignin)
 
 
 // GET /student/signup
-router.get("/student/signout", studentsignout)
+router.get("/student/signout",isAuthenticated, studentsignout)
 
 // POST /student/forgetpassword
 router.post("/student/forgetpassword", studentSendmail)
@@ -60,7 +60,7 @@ router.post("/student/update/:id",isAuthenticated, studentupdate)
 
 
 // POST /student/avatar/:id
-// router.post("/student/avatar/:id", isAuthenticated, upload.single('avatar'), studentavatar);
+router.post("/student/avatar/:id", isAuthenticated, studentavatar);
 
 
 

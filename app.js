@@ -32,6 +32,8 @@ const cookieparser= require("cookie-parser");
 //routes
 app.use("/user", require("./routes/indexRoute"));
 app.use("/resume", require("./routes/resumeRoute"));
+app.use("/employee", require("./routes/employeeRoute"));
+
 
 
 
