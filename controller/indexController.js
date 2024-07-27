@@ -8,6 +8,9 @@ const { sendmail } = require("../utils/Nodemailer");
 const { sendtoken } = require("../utils/SendToken");
 const imagekit= require("../utils/imagekit").initImageKit()
 
+const Internship =require("../Models/InternshipModel")
+const Job =require("../Models/jobModel")
+
 
 exports.homepage = catchAsyncErrors(async (req, res,next)=>{
             res.json({message:"Secure Homepage"});
@@ -108,39 +111,6 @@ exports.studentupdate=catchAsyncErrors(async (req, res,next)=>{
 })
 
 
-// exports.studentavatar=catchAsyncErrors(async (req, res,next)=>{
-//     const student = await Student.findById(req.params.id).exec();
-//      // Handle the uploaded file
-//      if (!req.file) {
-//         return res.status(400).json({ message: 'No file uploaded' });
-//     }
-
-//     // const file = req.files.avatar;
-//     // console.log(JSON.stringify(req.files))
-     
-
-// //     const modifiedFileName=`resumeBuilder-${Date.now()}${path.extname(file.name)}`
-
-// //     if(student.avatar.fileId !== ""){
-// //         await imagekit.deleteFile(student.avatar.fileId);
-// //     }
-
-// //     const {fileId, url}= await imagekit.upload({
-// //         file: file.data,
-// //         fileName:modifiedFileName,
-// //     })
-// //     // student.avatar.fileId= fileId;
-// //     // student.avatar.url=url
-// //     student.avatar= {fileId, url};
-// //     await student.save()
-
-// //     res.status(200).json({
-// //         success:true,
-// //        message:"Student Profile Updated"
-// //    })
-// //    sendtoken(student,201, res)
-    
-// })
 
 
 const path = require('path'); // Ensure path module is imported
@@ -195,8 +165,28 @@ exports.studentavatar = catchAsyncErrors(async (req, res, next) => {
     }
 });
 
+//----apply internship--------------
+exports.applyinternship = catchAsyncErrors(async (req, res,next)=>{
+    const student = await Student.findById(req.id).exec();
+    const internship = await Internship.findById(req.params.internshipid).exec();
+    student.internships.push(internship._id)
+    internship.students.push(student._id)
+    await student.save();
+    await internship.save();
+    res.json("message: applied!!!!")
+})
 
+//----apply job--------------
+exports.applyjob = catchAsyncErrors(async (req, res,next)=>{
+    const student = await Student.findById(req.id).exec();
+    const job = await Job.findById(req.params.jobid).exec();
+    student.jobs.push(job._id)
+    job.students.push(student._id)
+    await student.save()
+    await job.save()
 
-
-
-
+    res.json("message: applied!!!!")
+    
+    
+}
+)

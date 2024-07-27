@@ -9,7 +9,9 @@ const { homepage,
      studentforgetlink,
      studentresetpassword,
      studentupdate,
-     studentavatar
+     studentavatar,
+     applyinternship,
+     applyjob,
      } = require("../controller/indexController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -61,6 +63,18 @@ router.post("/student/update/:id",isAuthenticated, studentupdate)
 
 // POST /student/avatar/:id
 router.post("/student/avatar/:id", isAuthenticated, studentavatar);
+
+
+//----applied internship--------------
+
+// POST /student/apply/:internshipid
+router.post("/student/apply/internship/:internshipid", isAuthenticated, applyinternship);
+
+//----applied job--------------
+
+// POST /student/apply/:jobid
+router.post("/student/apply/job/:jobid", isAuthenticated, applyjob);
+
 
 
 
