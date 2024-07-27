@@ -56,7 +56,7 @@ const employeeModel = new mongoose.Schema({
     required:[true, "Organization name is Required"],
     
 },
-   internship:[
+   internships:[
     {type:mongoose.Schema.Types.ObjectId, ref:'internship'}
    ],
    jobs:[

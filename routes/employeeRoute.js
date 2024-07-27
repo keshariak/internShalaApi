@@ -9,7 +9,15 @@ const { homepage,
      employeeforgetlink,
      employeeresetpassword,
      employeeupdate,
-     employeeavatar
+     employeeavatar,
+
+     internshipcreate,
+     internshipread,
+     internshipreadsingle,
+
+     jobcreate,
+     jobread,
+     jobreadsingle,
      } = require("../controller/employeeController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -66,6 +74,27 @@ router.post("/update/:id",isAuthenticated, employeeupdate)
 router.post("/avatar/:id", isAuthenticated, employeeavatar);
 
 
+//----------------------INTERNSHIP---------------------
 
+//POST /employee/internship/create
+router.post("/internship/create", isAuthenticated, internshipcreate);
+
+//POST /employee/internship/read
+router.post("/internship/read", isAuthenticated, internshipread);
+
+//POST /employee/internship/read/:id
+router.post("/internship/read/:id", isAuthenticated, internshipreadsingle);
+
+
+//----------------------JOB---------------------
+
+//POST /employee/job/create
+router.post("/job/create", isAuthenticated, jobcreate);
+
+//POST /employee/job/read
+router.post("/job/read", isAuthenticated, jobread);
+
+//POST /employee/job/read/:id
+router.post("/job/read/:id", isAuthenticated, jobreadsingle);
 
 module.exports =router;

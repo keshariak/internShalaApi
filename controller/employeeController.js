@@ -3,6 +3,8 @@ const { catchAsyncErrors } = require("../middlewares/catchAsyncError");
 
 
 const Employee = require("../Models/EmployeeModel");
+const Internship = require("../Models/InternshipModel")
+const Job = require("../Models/jobModel")
 const ErrorHandler = require("../utils/ErrorHandler");
 const { sendmail } = require("../utils/Nodemailer");
 const { sendtoken } = require("../utils/SendToken");
@@ -162,6 +164,59 @@ exports.employeeavatar = catchAsyncErrors(async (req, res, next) => {
         return next(error);
     }
 });
+
+
+//------------------------INTERNSHIP-----------------------
+
+//creare
+exports.internshipcreate = catchAsyncErrors(async(req, res , next)=>{
+    const internship =await new Internship(req.body).save();
+    const employee = await Employee.findById(req.id).exec();
+    employee.internships.push(internship._id)
+    internship.employee= employee._id
+    await internship.save()
+    await employee.save()
+res.status(201).json({succes: true, internship})
+})
+
+ //Read
+exports.internshipread = catchAsyncErrors(async(req, res , next)=>{
+    const interships =await Internship.find()
+res.status(201).json({succes: true, interships})
+})
+
+
+exports.internshipreadsingle = catchAsyncErrors(async(req, res , next)=>{
+    const intership =await Internship.findById(req.params.id)
+res.status(201).json({succes: true, intership})
+})
+
+
+
+//------------------------JOBS-----------------------
+
+//creare
+exports.jobcreate = catchAsyncErrors(async(req, res , next)=>{
+    const job =await new Job(req.body).save();
+    const employee = await Employee.findById(req.id).exec();
+    employee.jobs.push(job._id)
+    job.employee= employee._id
+    await job.save()
+    await employee.save()
+res.status(201).json({succes: true, job})
+})
+
+ //Read
+exports.jobread = catchAsyncErrors(async(req, res , next)=>{
+    const jobs =await Job.find()
+res.status(201).json({succes: true, jobs})
+})
+
+
+exports.jobreadsingle = catchAsyncErrors(async(req, res , next)=>{
+    const job =await Job.findById(req.params.id)
+res.status(201).json({succes: true, job})
+})
 
 
 
