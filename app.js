@@ -1,6 +1,7 @@
 require("dotenv").config({path: "./.env"});
 const express = require("express");
 const app = express()
+ const cors= require("cors")
 
 //Db connetion
 require("./Models/database").connectDatabase()
@@ -29,10 +30,23 @@ const cookieparser= require("cookie-parser");
  app.use(fileupload())
 
 
+
+ app.use(
+    cors({
+        origin:"http://localhost:5173",
+    credentials:true,
+   })
+ )
+
 //routes
 app.use("/user", require("./routes/indexRoute"));
 app.use("/resume", require("./routes/resumeRoute"));
+// app.use("/resume", require("./routes/resumeRoute"));
 app.use("/employee", require("./routes/employeeRoute"));
+app.get("/", function(req, res, next){
+    res.send("Hello, Api is running!!!!!")
+
+})
 
 
 

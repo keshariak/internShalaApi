@@ -2,7 +2,10 @@ const express = require("express");
 // const uploadfile= require("../uploads")
 const { homepage,
      studentsignup,
+     studentsignupgoogle,
      studentsignin,
+     studentsigningoogle,
+     setstudentPassword,
      studentsignout, 
      currentUser,
      studentSendmail,
@@ -12,6 +15,10 @@ const { homepage,
      studentavatar,
      applyinternship,
      applyjob,
+     internshipread,
+     internshipreadsingle,
+     jobreadsingle,
+     jobread,
      } = require("../controller/indexController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -40,11 +47,23 @@ router.post("/student",isAuthenticated, currentUser);
 // POST /student/signup
 router.post("/student/signup", studentsignup)
 
+// POST /student/signup with GOOGLE
+router.post("/student/google/signup", studentsignupgoogle)
+
+
 // POST /student/signin
 router.post("/student/signin", studentsignin)
 
+// POST /student/signin WITH GOOGLE
+router.post("/student/google/signin", studentsigningoogle)
 
-// GET /student/signup
+
+
+// Route for setting a new password
+router.post('/student/set-password', setstudentPassword);
+
+
+// GET /student/signOut
 router.get("/student/signout",isAuthenticated, studentsignout)
 
 // POST /student/forgetpassword
@@ -76,7 +95,18 @@ router.post("/student/apply/internship/:internshipid", isAuthenticated, applyint
 router.post("/student/apply/job/:jobid", isAuthenticated, applyjob);
 
 
+//POST /employee/internship/read
+router.post("/student/internship/read", isAuthenticated, internshipread);
 
+
+//POST /employee/internship/read/:id
+router.post("/student/internship/read/:id", isAuthenticated, internshipreadsingle);
+
+//POST /employee/job/read
+router.post("/student/job/read", isAuthenticated, jobread);
+
+//POST /employee/job/read/:id
+router.post("/student/job/read/:id", isAuthenticated, jobreadsingle);
 
 
 module.exports =router;

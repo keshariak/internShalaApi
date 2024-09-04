@@ -2,7 +2,9 @@ const express = require("express");
 // const uploadfile= require("../uploads")
 const { homepage,
     employeesignup,
+    employeesignupgoogle,
      employeesignin,
+     employeesigningoogle,
      employeesignout, 
      currentUser,
      employeeSendmail,
@@ -18,6 +20,8 @@ const { homepage,
      jobcreate,
      jobread,
      jobreadsingle,
+     allstudents,
+     setemployeePassword,
      } = require("../controller/employeeController");
 const { isAuthenticated } = require("../middlewares/auth");
 
@@ -47,9 +51,17 @@ router.post("/employee-homepage",isAuthenticated, currentUser);
 // POST /Employee/signup
 router.post("/signup", employeesignup)
 
+// POST /google/signup with GOOGLE
+router.post("/google/signup", employeesignupgoogle)
+
+// POST /student/signin WITH GOOGLE
+router.post("/google/signin", employeesigningoogle)
+
 
 // POST /employee/signin
 router.post("/signin", employeesignin)
+// Route for setting a new password
+router.post('/employee/set-password', setemployeePassword);
 
 // GET /employee/signup
 router.get("/signout",isAuthenticated, employeesignout)
@@ -96,5 +108,9 @@ router.post("/job/read", isAuthenticated, jobread);
 
 //POST /employee/job/read/:id
 router.post("/job/read/:id", isAuthenticated, jobreadsingle);
+
+
+//POST /employee/Students
+router.get("/allstudents", isAuthenticated, allstudents);
 
 module.exports =router;

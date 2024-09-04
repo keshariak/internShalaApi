@@ -9,6 +9,7 @@ const jobModel = new mongoose.Schema({
     jobtype:{type: String, enum:["In office", "Remote"]},
     openings: Number,
     description:String,
+    from:String,
     preferences:String,
     salary:Number,
     perks:String,

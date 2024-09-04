@@ -16,14 +16,14 @@ const studentModel = new mongoose.Schema({
     
     contact:{
         type: String,
-        required:[true, "Contact is Required"],
+        
         maxLength:[10, "Password Should not exceed more than 15 characters"],
         minLength:[10, "Password should have atleast 5 characters"],
         
     },
     city:{
         type: String,
-        required:[true, "City is Required"],
+       
         minLength:[3, "City should have atleast 3 characters"],
         
     },
@@ -56,15 +56,26 @@ const studentModel = new mongoose.Schema({
         url:"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fdummy-avatar&psig=AOvVaw3BoFZVzSnCAVVHQhj39Qhs&ust=1721550253102000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJiymMqYtYcDFQAAAAAdAAAAABAE"
     }
    },
-   resume:{
-    education:[],
-    jobs:[],
-    internships:[],
-    responsibilities:[],
-    courses:[],
-    skills:[],
-    accomplishments:[],
-   },
+    resume: {
+        type: {
+            education: { type: [Object], default: [] },
+            jobs: { type: [Object], default: [] },
+            internships: { type: [Object], default: [] },
+            responsibilities: { type: [Object], default: [] },
+            courses: { type: [String], default: [] },
+            skills: { type: [Object], default: [] },
+            accomplishments: { type: [Object], default: [] }
+        },
+        default: {
+            education: [],
+            jobs: [],
+            internships: [],
+            responsibilities: [],
+            courses: [],
+            skills: [],
+            accomplishments: []
+        }
+    },
    internships:[
     {type:mongoose.Schema.Types.ObjectId, ref:'internship'}
    ],
