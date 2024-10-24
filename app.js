@@ -33,7 +33,7 @@ const cookieparser= require("cookie-parser");
 
  app.use(
     cors({
-        origin:"https://nauktilok-frontend-react.vercel.app",
+        origin:"http://localhost:5173",
     credentials:true,
    })
  )
