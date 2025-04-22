@@ -23,7 +23,7 @@ const cookieparser= require("cookie-parser");
     secret: process.env.EXPRESS_SESSION_SECRET
  })
  );
- 
+
  app.use(cookieparser())
 
 // file uploader
@@ -34,7 +34,7 @@ const cookieparser= require("cookie-parser");
 
  app.use(
     cors({
-        origin:"http://localhost:5173",
+        origin:"https://nauktilok-frontend-react-git-main-keshariaks-projects.vercel.app/",
     credentials:true,
    })
  )
