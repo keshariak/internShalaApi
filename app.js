@@ -34,7 +34,7 @@ const cookieparser= require("cookie-parser");
 
  app.use(
     cors({
-        origin:"https://nauktilok-frontend-react-git-main-keshariaks-projects.vercel.app/",
+        origin:"https://nauktilok-frontend-react-git-main-keshariaks-projects.vercel.app",
     credentials:true,
    })
  )
