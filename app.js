@@ -32,12 +32,31 @@ const cookieparser= require("cookie-parser");
 
 
 
- app.use(
-    cors({
-        origin:"https://nauktilok-frontend-react-git-main-keshariaks-projects.vercel.app",
-    credentials:true,
-   })
- )
+//  app.use(
+//     cors({
+//         origin:"https://nauktilok-frontend-react-git-main-keshariaks-projects.vercel.app",
+//          'https://nauktilok-frontend-react.vercel.app'
+//     credentials:true,
+//    })
+//  )
+
+
+
+const allowedOrigins = [
+  'https://nauktilok-frontend-react.vercel.app',
+  'https://nauktilok-frontend-react-git-main-keshariaks-projects.vercel.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 //routes
 app.use("/user", require("./routes/indexRoute"));
