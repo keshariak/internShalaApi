@@ -75,17 +75,21 @@ exports.setstudentPassword = async (req, res) => {
 };
 
 
-exports.studentsignin=catchAsyncErrors(async (req, res,next)=>{
-    const student= await Student.findOne({email:req.body.email}).select("+password").exec();
-    
+exports.studentsignin = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findOne({ email: req.body.email }).select("+password").exec();
 
-    if(!student) return next(new ErrorHandler("User Not Found with this Email address", 404))
+  if (!student) {
+    return next(new ErrorHandler("User Not Found with this Email address", 404));
+  }
 
-        const isMatch= student.comparepassword(req.body.password);
-        if(!isMatch) return next(new ErrorHandler("Wrong password", 500))
-        // res.json(student)
-        sendtoken(student,200, res)
-})
+  const isMatch = await student.comparepassword(req.body.password); // ✅ use await here
+
+  if (!isMatch) {
+    return next(new ErrorHandler("Wrong password", 500));
+  }
+
+  sendtoken(student, 200, res);
+});
 
 
 
