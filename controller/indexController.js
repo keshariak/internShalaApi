@@ -18,11 +18,16 @@ exports.homepage = catchAsyncErrors(async (req, res,next)=>{
     }
 )
 
-exports.currentUser = catchAsyncErrors(async (req, res,next)=>{
-    const student = await Student.findById(req.id).exec();
-    res.json({student})
-}
-)
+// exports.currentUser = catchAsyncErrors(async (req, res,next)=>{
+//     const student = await Student.findById(req.id).exec();
+//     res.json({student})
+// }
+// )
+exports.currentUser = catchAsyncErrors(async (req, res, next) => {
+  const student = await Student.findById(req.user.id).exec();
+  res.json({ student });
+});
+
 
 exports.studentsignup=catchAsyncErrors(async (req, res,next)=>{
     const student= await new Student(req.body).save();
